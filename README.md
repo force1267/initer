@@ -31,3 +31,27 @@ if any error happens `parse_error` will be filled with a string and returns a no
 it takes a filename and an `ini` refrence and saves it to file.
 in case any error happens the function returns a non-zero integer.
 it is not recommended to change an ini file programaticaly although the tool is provided.
+
+## example
+
+```cpp
+using namespace initer;
+int main() {
+    string filename = "config.ini";
+    ini file;
+    string parse_error;
+    int code = load(filename, file, parse_error);
+    if(code == 0) {
+        code = save(filename + ".tmp.ini", file);
+    } else {
+        cout << parse_error << endl;
+    }
+    
+    for(auto cfg: file) {
+        cout << cfg[0] << " : ";
+        for(auto value: cfg[1]){
+            cout << value << endl;
+        }
+    }
+}
+```
